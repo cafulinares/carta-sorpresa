@@ -1,86 +1,292 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mi linda flor</title>
-
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(120deg, #4c0b15, #1a0000);
-        font-family: "Georgia", serif;
-        color: #f7ecec;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para Heidy Flor de María</title>
+  <style>
+    :root{
+      --bg1:#4c0018;
+      --bg2:#050006;
+      --card-bg:rgba(10,0,6,0.88);
+      --accent:#ffb3c6;
+      --text:#f2d7dd;
+      --muted:#ffc2d4;
+      --max-width:680px;
+      --ease: cubic-bezier(.2,.9,.2,1);
     }
 
-    .container {
-        max-width: 600px;
-        padding: 20px;
-        text-align: center;
-        animation: fadeIn 1.5s ease forwards;
-        opacity: 0;
+    /* Reset */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      padding:0;
+      font-family: "Georgia", serif;
+      background: radial-gradient(circle at 10% 10%, rgba(200,40,90,0.06), transparent 8%),
+                  linear-gradient(120deg,var(--bg1) 0%, #2a0010 40%, var(--bg2) 100%);
+      background-size: 200% 200%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:18px;
+      overflow-y:auto;
+      color:var(--text);
+      animation: bgShift 22s var(--ease) infinite;
     }
 
-    @keyframes fadeIn {
-        to { opacity: 1; }
+    @keyframes bgShift{
+      0%{background-position:0% 0%}
+      50%{background-position:100% 100%}
+      100%{background-position:0% 0%}
     }
 
-    /* ✅ ANIMACIÓN DE ESCRITURA REAL */
-    .typing {
-        font-size: 28px;
-        white-space: nowrap;
-        overflow: hidden;
-        border-right: 3px solid #f7ecec;
-        width: 0;
-        animation: typing 3s steps(30) forwards, blink .7s infinite;
-        margin-bottom: 20px;
+    /* Carta */
+    .carta{
+      width:100%;
+      max-width:var(--max-width);
+      background:var(--card-bg);
+      padding:28px;
+      border-radius:14px;
+      box-shadow:0 20px 50px rgba(0,0,0,0.7);
+      border:1px solid rgba(180,20,80,0.45);
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+      transform:translateY(18px) scale(0.995);
+      opacity:0;
+      animation:cardIn 900ms var(--ease) forwards;
     }
 
-    @keyframes typing {
-        from { width: 0; }
-        to { width: 100%; }
+    @keyframes cardIn{
+      to{opacity:1; transform:none}
     }
 
-    @keyframes blink {
-        50% { border-color: transparent; }
+    .carta::before{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background: radial-gradient(circle at 20% 20%, rgba(255,180,200,0.06), transparent 12%),
+                  radial-gradient(circle at 80% 80%, rgba(255,120,160,0.03), transparent 12%);
+      filter: blur(22px);
+      transform:scale(1.05);
+      pointer-events:none;
+      z-index:0;
+      animation:glow 10s linear infinite;
+      mix-blend-mode:screen;
+    }
+    @keyframes glow{
+      0%{transform:translateY(0) scale(1)}
+      50%{transform:translateY(-6px) scale(1.02)}
+      100%{transform:translateY(0) scale(1)}
     }
 
-    p {
-        font-size: 18px;
-        line-height: 1.6;
-        margin-top: 10px;
+    /* Header */
+    h1{
+      margin:0;
+      font-size:clamp(20px,5vw,30px);
+      text-align:center;
+      color:#ffe6f0;
+      letter-spacing:1px;
+      z-index:1;
+      position:relative;
     }
 
-    /* ✅ Ajuste para celular */
-    @media (max-width: 600px) {
-        .typing { font-size: 22px; }
-        p { font-size: 16px; }
+    .nombre{
+      text-align:center;
+      font-size:clamp(14px,3.6vw,18px);
+      color:var(--muted);
+      margin:10px 0 18px;
+      font-weight:700;
+      z-index:1;
+      position:relative;
     }
-</style>
+
+    /* Texto: aparición escalonada */
+    .content{
+      position:relative;
+      z-index:1;
+    }
+
+    .content p{
+      margin:12px 0;
+      font-size:clamp(15px,3.8vw,17px);
+      line-height:1.85;
+      color:var(--text);
+      text-align:justify;
+      opacity:0;
+      transform:translateY(8px);
+      animation:paraIn 700ms var(--ease) forwards;
+      animation-delay: 0s;
+    }
+
+    /* stagger usando variables en línea (se aplican desde JS si quieres) */
+    @keyframes paraIn{
+      to{opacity:1; transform:none}
+    }
+
+    /* párrafo final y firma */
+    .final{
+      margin-top:18px;
+      font-size:clamp(16px,4vw,18px);
+      color:#ffe6ea;
+      font-weight:700;
+      text-align:center;
+      opacity:0;
+      transform:translateY(8px);
+      animation:paraIn 700ms var(--ease) forwards;
+      animation-delay: 0s;
+    }
+
+    .firma{
+      margin-top:22px;
+      text-align:right;
+      font-size:16px;
+      color:var(--muted);
+      font-style:italic;
+      opacity:0;
+      transform:translateY(8px);
+      animation:paraIn 700ms var(--ease) forwards;
+      animation-delay: 0s;
+    }
+
+    /* micro-interacciones */
+    .carta:active{ transform:translateY(2px) scale(0.999) }
+    .carta a{ color:var(--accent); text-decoration:none }
+
+    /* mobile tweaks */
+    @media (max-width:480px){
+      body{padding:12px}
+      .carta{padding:20px; border-radius:12px}
+      h1{font-size:22px}
+      .nombre{font-size:15px}
+      .content p{font-size:15px; line-height:1.8}
+      .final{font-size:16px}
+      .firma{font-size:15px}
+      /* reducir movimiento en móviles lentos */
+      @media (pointer: coarse){
+        .carta::before{filter:blur(18px)}
+      }
+    }
+
+    /* accesibilidad: respeta preferencia de reducir movimiento */
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important}
+      .carta{transform:none; opacity:1}
+      .content p, .final, .firma{opacity:1; transform:none}
+    }
+
+    /* focus */
+    a:focus, button:focus{outline:2px dashed rgba(255,180,200,0.18); outline-offset:4px}
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="typing">Mi linda flor de marzo</div>
+  <div class="carta" role="main" aria-labelledby="titulo">
+    <h1 id="titulo">Cuando tu nombre despierta a la noche</h1>
+    <div class="nombre">Heidy Flor de María</div>
 
-        <p>
-            Flor,<br>
-            Te escribí esto para que lo leas tranquila, sin prisa.  
-            A veces lo que uno siente no cabe en un mensaje rápido.
-        </p>
+    <div class="content" aria-label="Carta">
+      <p style="animation-delay: 220ms;">
+        Hay noches en las que el silencio no pesa… seduce.  
+        Donde la oscuridad no asusta… invita.  
+        Y en ese espacio quieto, donde el mundo parece detenerse,  
+        es tu nombre, Flor, el que aparece primero, suave, inevitable,  
+        como si la noche misma lo susurrara para mí.
+      </p>
 
-        <p>
-            No busco nada, solo compartirte algo sincero.
-        </p>
+      <p style="animation-delay: 420ms;">
+        No sé si es tu voz, tu mirada, o esa calma tuya que desarma,  
+        pero hay algo en ti que atrae como un imán antiguo,  
+        algo que no se explica con lógica,  
+        algo que simplemente… me llama.
+      </p>
 
-        <p><strong>Robinho</strong></p>
+      <p style="animation-delay: 620ms;">
+        Y cuanto más intento entenderlo, más claro lo siento:  
+        tú tienes esa luz que no deslumbra, pero envuelve;  
+        esa presencia que no grita, pero marca;  
+        esa energía que no se olvida, aunque uno cierre los ojos.
+      </p>
+
+      <p style="animation-delay: 820ms;">
+        Hay personas que pasan por la vida como sombras,  
+        y otras que llegan como un susurro que se queda.  
+        Tú eres de esas presencias que no se buscan,  
+        pero cuando aparecen, uno entiende por qué nada antes encajaba.  
+        Porque eras tú la pieza que faltaba en un lugar  
+        que ni siquiera sabía que estaba vacío.
+      </p>
+
+      <p style="animation-delay: 1020ms;">
+        He aprendido a leerte en tus silencios,  
+        en la forma en que miras cuando no dices nada,  
+        en la manera en que tu risa rompe cualquier oscuridad.  
+        Y aunque no lo digas, aunque no lo nombres,  
+        hay algo en ti que responde a lo mío,  
+        como si nuestras energías se reconocieran antes que nosotros.
+      </p>
+
+      <p style="animation-delay: 1220ms;">
+        No quiero apresurarte, Flor.  
+        No quiero empujarte a nada.  
+        Pero tampoco quiero seguir guardando lo que siento  
+        como si fuera un secreto que no merece ver la luz.  
+        Lo que nace contigo no es un impulso,  
+        es una certeza que crece en silencio,  
+        como esas historias antiguas donde dos almas se encuentran  
+        sin haberlo planeado.
+      </p>
+
+      <p class="final" style="animation-delay: 1420ms;">
+        Por eso hoy, sin máscaras y sin ruido,  
+        te abro este lugar que llevo guardado para ti:  
+        un espacio donde tú y yo caminemos de una forma distinta,  
+        más cercana, más nuestra, más verdadera.  
+        No necesito ponerle un nombre…  
+        sé que, si lees con el corazón, lo vas a entender.
+      </p>
+
+      <p style="animation-delay: 1620ms;">
+        Y si alguna parte de ti responde a estas palabras,  
+        aunque sea en silencio, aunque nadie más lo sepa,  
+        entonces no hace falta que digas nada grande:  
+        bastará con que un día, cuando me mires,  
+        tus ojos me digan que también elegiste quedarte.
+      </p>
+
+      <p style="animation-delay: 1820ms;">
+        Porque hay conexiones que no se explican,  
+        solo se viven.  
+        Y lo que siento contigo no busca explicación…  
+        busca camino.
+      </p>
+
+      <div class="firma" style="animation-delay: 2020ms;">
+        — Robinho
+      </div>
     </div>
+  </div>
+
+  <script>
+    // Pequeño script para mejorar la aparición escalonada en móviles
+    (function(){
+      try {
+        const paragraphs = document.querySelectorAll('.content p, .final, .firma');
+        paragraphs.forEach((el, i) => {
+          // Si ya tiene animation-delay en línea, respetarlo; si no, asignar uno
+          if (!el.style.animationDelay) {
+            el.style.animationDelay = (200 + i*180) + 'ms';
+          }
+        });
+      } catch(e){}
+    })();
+  </script>
 </body>
 </html>
+
+
 
 
